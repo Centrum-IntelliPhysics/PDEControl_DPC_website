@@ -264,3 +264,82 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
   vertical-align: middle;
 }
 .tag-pill-alt { background: #fdf0e3; color: #a2560d; }
+
+/* ==========================================================================
+   CONTRAST HARDENING
+   The template's index.css carries ~40 !important declarations (buttons, pre,
+   code). Any rule of ours without !important silently loses to it, which is how
+   light-on-light and dark-on-dark combinations appeared. Every colour-critical
+   pair below is therefore forced, and uses literal hex rather than a custom
+   property so it cannot fail if a variable fails to resolve.
+   ========================================================================== */
+
+/* ---- hero buttons: white on deep blue ---- */
+.publication-links .button,
+.publication-links .button.is-dark,
+.publication-links a.button.is-dark {
+  background: #0b3d6b !important;
+  background-color: #0b3d6b !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+.publication-links .button.is-dark:hover,
+.publication-links a.button.is-dark:hover {
+  background: #1a6ba8 !important;
+  background-color: #1a6ba8 !important;
+  color: #ffffff !important;
+}
+.publication-links .button span,
+.publication-links .button i,
+.publication-links .button .icon,
+.publication-links .button .icon i {
+  color: #ffffff !important;
+}
+
+/* ---- systems table: white on deep blue header, dark on white body ---- */
+table.systems-table thead th,
+table.systems-table thead td,
+.systems-table thead tr th {
+  background: #0b3d6b !important;
+  background-color: #0b3d6b !important;
+  color: #ffffff !important;
+  border-color: #0b3d6b !important;
+}
+table.systems-table tbody td,
+table.systems-table tbody th {
+  background-color: #ffffff !important;
+  color: #1f2933 !important;
+}
+table.systems-table tbody tr:hover td,
+table.systems-table tbody tr:hover th {
+  background-color: #e8f1f8 !important;
+}
+
+/* ---- code blocks: light text on dark slate ---- */
+.code-block pre,
+#BibTeX pre,
+section#BibTeX pre {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #0f172a !important;
+}
+.code-block pre code,
+#BibTeX pre code,
+section#BibTeX pre code {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+/* ---- inline code inside light cards: dark on pale blue ---- */
+.repro-card code,
+p code {
+  background: #dbe7f1 !important;
+  background-color: #dbe7f1 !important;
+  color: #0b3d6b !important;
+}
+
+/* ---- captions and small print stay legible ---- */
+.caption, .gif-label { color: #5b6673 !important; }
+.gif-label-active    { color: #0b3d6b !important; }
