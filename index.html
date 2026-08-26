@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Learning to Control PDEs with Differentiable Predictive Control and Time-Integrated Neural Operators">
+  <meta name="description" content="Self-supervised neural control policies for PDEs, learned by backpropagating through a differentiable TI-DeepONet surrogate. Four orders of magnitude faster than nonlinear MPC at inference.">
+  <meta name="keywords" content="differentiable predictive control, DeepONet, neural operator, PDE control, operator learning, scientific machine learning, optimal control, model predictive control, JAX">
+  <meta name="author" content="Dibakar Roy Sarkar, Jan Drgona, Somdatta Goswami">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Johns Hopkins University">
+  <meta property="og:title" content="Learning to Control PDEs with Differentiable Predictive Control and Time-Integrated Neural Operators">
+  <meta property="og:description" content="Self-supervised neural control policies for PDEs, learned by backpropagating through a differentiable TI-DeepONet surrogate. Four orders of magnitude faster than nonlinear MPC at inference.">
+  <!-- TODO(you): update if you use a custom domain -->
+  <meta property="og:url" content="https://centrum-intelliphysics.github.io/PDEControl_DPC_website/">
+  <meta property="og:image" content="https://centrum-intelliphysics.github.io/PDEControl_DPC_website/static/images/schematic.png">
+  <meta property="og:image:alt" content="TI-DeepONet surrogate embedded in a Differentiable Predictive Control loop">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learning to Control PDEs with DPC and Time-Integrated Neural Operators">
+  <meta name="twitter:description" content="Self-supervised neural control policies for PDEs. Four orders of magnitude faster than nonlinear MPC at inference.">
+  <meta name="twitter:image" content="https://centrum-intelliphysics.github.io/PDEControl_DPC_website/static/images/schematic.png">
+
+  <!-- Google Scholar / citation -->
+  <meta name="citation_title" content="Learning to Control PDEs with Differentiable Predictive Control and Time-Integrated Neural Operators">
+  <meta name="citation_author" content="Roy Sarkar, Dibakar">
+  <meta name="citation_author" content="Drgo&#328;a, J&#225;n">
+  <meta name="citation_author" content="Goswami, Somdatta">
+  <meta name="citation_publication_date" content="2025/11/12">
+  <meta name="citation_arxiv_id" content="2511.08992">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2511.08992">
+
+  <meta name="theme-color" content="#0b3d6b">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>Learning to Control PDEs with DPC and Time-Integrated Neural Operators</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/custom.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- MathJax for the PDE definitions -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Learning to Control PDEs with Differentiable Predictive Control and Time-Integrated Neural Operators",
+    "author": [
+      {"@type": "Person", "name": "Dibakar Roy Sarkar"},
+      {"@type": "Person", "name": "Ján Drgoňa"},
+      {"@type": "Person", "name": "Somdatta Goswami"}
+    ],
+    "datePublished": "2025-11-12",
+    "publisher": {"@type": "Organization", "name": "Johns Hopkins University"},
+    "identifier": "arXiv:2511.08992",
+    "url": "https://arxiv.org/abs/2511.08992"
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ============================== HERO ============================== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <h1 class="title is-1 publication-title">
+            Learning to Control PDEs with Differentiable Predictive Control
+            and Time-Integrated Neural Operators
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="mailto:droysar1@jh.edu">Dibakar Roy Sarkar</a>,</span>
+            <span class="author-block">
+              <a href="mailto:jdrgona1@jh.edu">J&aacute;n Drgo&#328;a</a><sup>*</sup>,</span>
+            <span class="author-block">
+              <a href="mailto:somdatta@jhu.edu">Somdatta Goswami</a><sup>*</sup></span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top:.6rem;">
+            <span class="author-block">Johns Hopkins University, Whiting School of Engineering</span><br>
+            <span class="author-block is-size-7" style="opacity:.75;"><sup>*</sup>Advised equally</span>
+          </div>
+
+          <div class="column has-text-centered" style="margin-top:1.4rem;">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2511.08992" target="_blank" rel="noopener"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2511.08992" target="_blank" rel="noopener"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>PDF</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/Centrum-IntelliPhysics/PDEControl_DPC" target="_blank" rel="noopener"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC" target="_blank" rel="noopener"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-database"></i></span>
+                  <span>Data</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-left"></i></span>
+                  <span>Cite</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TEASER ============================== -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/schematic.png"
+           alt="TI-DeepONet surrogate embedded inside a Differentiable Predictive Control loop"
+           style="width:100%; height:auto; border-radius:10px;">
+      <h2 class="subtitle has-text-centered" style="margin-top:1rem;">
+        A <strong>TI-DeepONet</strong> learns the PDE dynamics and stays differentiable, so the
+        optimal-control loss can be backpropagated through an entire closed-loop rollout to fit a
+        neural policy &mdash; <strong>offline, self-supervised, and with no supervisory controller.</strong>
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ABSTRACT ============================== -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present a data-driven control framework for partial differential equations (PDEs).
+            Our approach integrates <strong>Time-Integrated Deep Operator Networks (TI-DeepONets)</strong>
+            as differentiable PDE surrogate models within the <strong>Differentiable Predictive Control
+            (DPC)</strong> &mdash; a self-supervised learning framework for constrained neural control
+            policies. The TI-DeepONet architecture learns temporal derivatives and couples them with
+            numerical integrators, while the DPC algorithm uses automatic differentiation to compute
+            policy gradients by backpropagating the expectations of the optimal control loss through
+            the learned TI-DeepONet. This approach enables efficient offline optimization of neural
+            policies without the need for online optimization or supervisory controllers. We
+            empirically demonstrate the proposed method across diverse PDE systems, including the
+            heat, the nonlinear Burgers', and the reaction&ndash;diffusion equations. The learned
+            policies achieve target tracking, constraint satisfaction, and curvature minimization
+            objectives, while generalizing across distributions of initial conditions and parameters.
+            Moreover, we demonstrate <strong>four orders of magnitude acceleration at inference
+            time</strong> compared to nonlinear model predictive control benchmarks. These results
+            highlight the promise of operator learning for scalable model-based control of PDEs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== METHOD ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">How it works</h2>
+    <div class="columns is-centered" style="margin-top:1rem;">
+
+      <div class="column">
+        <div class="stage-card">
+          <div class="stage-num">1</div>
+          <h3 class="title is-5">Learn a differentiable surrogate</h3>
+          <p>
+            A TI-DeepONet predicts the <em>temporal derivative</em> of the state rather than the next
+            state directly, and is composed with an RK4 integrator. Keeping the integrator explicit
+            preserves temporal causality and limits error accumulation over long horizons &mdash;
+            which is what makes the surrogate trustworthy enough to differentiate through for
+            hundreds of steps.
+          </p>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="stage-card">
+          <div class="stage-num">2</div>
+          <h3 class="title is-5">Backpropagate through the rollout</h3>
+          <p>
+            The surrogate is <strong>frozen</strong>. The optimal-control loss is evaluated on a full
+            closed-loop rollout and its gradient flows back through every integration step to the
+            policy parameters. No labelled control data, no supervisory controller, and no
+            optimization at deployment &mdash; the policy is a single forward pass.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="content has-text-centered" style="margin-top:1.5rem;">
+      <p class="is-size-6" style="opacity:.8;">
+        Every system is actuated by Gaussian sources whose amplitudes the policy sets at each step:
+        $f(x,t)=\sum_i c_i(t)\,\exp\!\left(-\frac{(x-x_i)^2}{2\sigma^2}\right)$
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SYSTEMS TABLE ============================== -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Three PDE systems</h2>
+    <div class="table-container" style="margin-top:1.5rem;">
+      <table class="table is-fullwidth is-hoverable systems-table">
+        <thead>
+          <tr>
+            <th>System</th><th>Dynamics</th><th>Control objective</th><th>Policy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Heat</strong></td>
+            <td>$\partial_t u = \nu\,\partial_{xx}u + f$</td>
+            <td>Target tracking</td>
+            <td>$\pi(u_t,u^\ast)\to c\in\mathbb{R}^4$</td>
+          </tr>
+          <tr>
+            <td><strong>Burgers'</strong></td>
+            <td>$\partial_t u + u\,\partial_x u = f$</td>
+            <td>Shock mitigation<br><span class="is-size-7" style="opacity:.7;">minimize curvature $\lVert\partial_{xx}u\rVert^2$</span></td>
+            <td>$\pi(u_t)\to c\in\mathbb{R}^2$</td>
+          </tr>
+          <tr>
+            <td><strong>Reaction&ndash;diffusion</strong></td>
+            <td>$\partial_t u = D\,\partial_{xx}u + r\,u(1-u) + f$</td>
+            <td>Target tracking</td>
+            <td>$\pi(u_t,u^\ast)\to c\in\mathbb{R}^4$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="has-text-centered is-size-7" style="opacity:.7;">
+      Burgers' is the outlier by design: there is no target state, so the policy observes only the
+      current state and is rewarded purely for flattening curvature.
+    </p>
+  </div>
+</section>
+
+<!-- ============================== ANIMATIONS CAROUSEL ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Learned policies in action</h2>
+    <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
+      Each panel compares the <strong>uncontrolled</strong> evolution against the
+      <strong>policy-controlled</strong> one, on initial conditions the policy has never seen.
+      Use the arrows to switch between systems.
+    </p>
+
+    <div class="carousel results-carousel">
+
+      <div class="item">
+        <h3 class="title is-5 has-text-centered">Heat equation &mdash; target tracking</h3>
+        <div class="columns is-vcentered">
+          <div class="column">
+            <p class="gif-label">No control</p>
+            <img src="static/images/gifs/heat_zero.gif" alt="Heat equation evolving with no control" loading="lazy">
+          </div>
+          <div class="column">
+            <p class="gif-label gif-label-active">Learned policy</p>
+            <img src="static/images/gifs/heat_policy.gif" alt="Heat equation driven to the target by the learned policy" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <h3 class="title is-5 has-text-centered">Burgers' equation &mdash; shock mitigation</h3>
+        <div class="columns is-vcentered">
+          <div class="column">
+            <p class="gif-label">No control</p>
+            <img src="static/images/gifs/burgers_zero.gif" alt="Burgers equation forming a shock with no control" loading="lazy">
+          </div>
+          <div class="column">
+            <p class="gif-label gif-label-active">Learned policy</p>
+            <img src="static/images/gifs/burgers_policy.gif" alt="Burgers equation with shock suppressed by the learned policy" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <h3 class="title is-5 has-text-centered">Reaction&ndash;diffusion &mdash; target tracking</h3>
+        <div class="columns is-vcentered">
+          <div class="column">
+            <p class="gif-label">No control</p>
+            <img src="static/images/gifs/reaction_diffusion_zero.gif" alt="Reaction-diffusion evolving with no control" loading="lazy">
+          </div>
+          <div class="column">
+            <p class="gif-label gif-label-active">Learned policy</p>
+            <img src="static/images/gifs/reaction_diffusion_policy.gif" alt="Reaction-diffusion driven to the target by the learned policy" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SPEED ============================== -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Inference speed</h2>
+    <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
+      Because the policy is a single forward pass, deployment costs a network evaluation instead of
+      solving an optimization problem at every step. Against nonlinear MPC benchmarks the paper
+      reports <strong>four orders of magnitude</strong> of acceleration.
+    </p>
+
+    <div class="columns is-centered">
+      <div class="column is-one-third">
+        <div class="stat-card">
+          <div class="stat-number">10<sup>4</sup>&times;</div>
+          <div class="stat-label">faster than nonlinear MPC<br>at inference</div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="stat-card">
+          <div class="stat-number">0.34<span class="stat-unit">ms</span></div>
+          <div class="stat-label">policy inference<br>per control step</div>
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="stat-card">
+          <div class="stat-number">400</div>
+          <div class="stat-label">step closed-loop rollout<br>in under 2 seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="has-text-centered is-size-7" style="opacity:.7;margin-top:1rem;">
+      Per-step and rollout timings measured with <code>evaluate.py</code> from the released code,
+      single CPU core. The 10<sup>4</sup>&times; figure is the paper's comparison against nonlinear
+      MPC benchmarks.
+    </p>
+
+    <!-- TODO(you): drop in the paper's MPC-vs-DPC timing table or bar chart here.
+         Put the figure at static/images/extra/ and reference it below. -->
+  </div>
+</section>
+
+<!-- ============================== RESULTS ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Closed-loop results</h2>
+    <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
+      Policies are trained against the learned surrogate, then deployed on the <em>true numerical
+      solver</em> &mdash; the real test of whether the surrogate was faithful enough to learn through.
+    </p>
+
+    <div class="result-block">
+      <h3 class="title is-5">Heat equation &mdash; target tracking</h3>
+      <img src="static/images/results/heat_closed_loop.png" alt="Heat equation closed-loop tracking through the learned surrogate" loading="lazy">
+      <p class="caption"><span class="tag-pill">learned dynamics</span> Policy-controlled vs. uncontrolled evolution with the applied control signals.</p>
+      <img src="static/images/results/heat_physics.png" alt="Heat equation policy deployed on the Crank-Nicolson solver" loading="lazy" style="margin-top:1rem;">
+      <p class="caption"><span class="tag-pill tag-pill-alt">true solver</span> The same policy driving the Crank&ndash;Nicolson solver.</p>
+    </div>
+
+    <div class="result-block">
+      <h3 class="title is-5">Burgers' equation &mdash; shock mitigation</h3>
+      <img src="static/images/results/burgers_closed_loop.png" alt="Burgers equation shock mitigation through the learned surrogate" loading="lazy">
+      <p class="caption"><span class="tag-pill">learned dynamics</span> Curvature suppressed relative to the uncontrolled shock-forming trajectory.</p>
+      <img src="static/images/results/burgers_physics.png" alt="Burgers policy deployed on the upwind solver" loading="lazy" style="margin-top:1rem;">
+      <p class="caption"><span class="tag-pill tag-pill-alt">true solver</span> The same policy driving the upwind Burgers solver.</p>
+    </div>
+
+    <div class="result-block">
+      <h3 class="title is-5">Reaction&ndash;diffusion &mdash; target tracking</h3>
+      <img src="static/images/results/reaction_diffusion_closed_loop.png" alt="Reaction-diffusion closed-loop tracking through the learned surrogate" loading="lazy">
+      <p class="caption"><span class="tag-pill">learned dynamics</span> The policy counteracts the nonlinear reaction term driving the state toward $u\equiv 1$.</p>
+      <img src="static/images/results/reaction_diffusion_physics.png" alt="Reaction-diffusion policy deployed on the backward-Euler Newton solver" loading="lazy" style="margin-top:1rem;">
+      <p class="caption"><span class="tag-pill tag-pill-alt">true solver</span> The same policy driving the backward-Euler/Newton solver.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TRAINING ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Training</h2>
+    <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
+      Stage&nbsp;1 fits the surrogate to trajectory data. Stage&nbsp;2 freezes it and fits the policy
+      through differentiable rollouts &mdash; note that the policy objective needs
+      <em>no labelled controls at all</em>.
+    </p>
+
+    <h3 class="title is-5 has-text-centered" style="color:var(--accent);">Stage 1 &middot; TI-DeepONet surrogate</h3>
+    <div class="columns">
+      <div class="column">
+        <img src="static/images/results/heat_ti_don_loss.png" alt="Heat surrogate training loss" loading="lazy">
+        <p class="caption">Heat</p>
+      </div>
+      <div class="column">
+        <img src="static/images/results/burgers_ti_don_loss.png" alt="Burgers surrogate training loss" loading="lazy">
+        <p class="caption">Burgers'</p>
+      </div>
+      <div class="column">
+        <img src="static/images/results/reaction_diffusion_ti_don_loss.png" alt="Reaction-diffusion surrogate training loss" loading="lazy">
+        <p class="caption">Reaction&ndash;diffusion</p>
+      </div>
+    </div>
+
+    <h3 class="title is-5 has-text-centered" style="color:var(--accent);margin-top:2rem;">Stage 2 &middot; DPC policy</h3>
+    <div class="columns">
+      <div class="column">
+        <img src="static/images/results/heat_dpc_loss.png" alt="Heat DPC policy training loss" loading="lazy">
+        <p class="caption">Heat &mdash; terminal tracking MSE</p>
+      </div>
+      <div class="column">
+        <img src="static/images/results/burgers_dpc_loss.png" alt="Burgers DPC policy training loss" loading="lazy">
+        <p class="caption">Burgers' &mdash; accumulated curvature</p>
+      </div>
+      <div class="column">
+        <img src="static/images/results/reaction_diffusion_dpc_loss.png" alt="Reaction-diffusion DPC policy training loss" loading="lazy">
+        <p class="caption">Reaction&ndash;diffusion &mdash; terminal tracking MSE</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SURROGATE ACCURACY ============================== -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Surrogate accuracy</h2>
+    <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
+      Relative $L_2$ error of the TI-DeepONet against the numerical solver over full trajectories.
+    </p>
+    <div class="columns">
+      <div class="column">
+        <img src="static/images/results/heat_error_dist.png" alt="Heat equation surrogate error distribution" loading="lazy">
+        <p class="caption">Heat</p>
+      </div>
+      <div class="column">
+        <img src="static/images/results/burgers_error_dist.png" alt="Burgers equation surrogate error distribution" loading="lazy">
+        <p class="caption">Burgers'</p>
+      </div>
+      <div class="column">
+        <img src="static/images/results/reaction_diffusion_error_dist.png" alt="Reaction-diffusion surrogate error distribution" loading="lazy">
+        <p class="caption">Reaction&ndash;diffusion</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ADDITIONAL FIGURES (placeholder) ============================== -->
+<!--
+  TODO(you): additional figures from the paper go here.
+  1. Put image files in  static/images/extra/
+  2. Copy the result-block pattern below for each one.
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">SECTION TITLE</h2>
+    <div class="result-block">
+      <h3 class="title is-5">FIGURE TITLE</h3>
+      <img src="static/images/extra/YOUR_FIGURE.png" alt="DESCRIBE THE FIGURE" loading="lazy">
+      <p class="caption">What the figure shows and why it matters.</p>
+    </div>
+  </div>
+</section>
+-->
+
+<!-- ============================== REPRODUCE ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Try it yourself</h2>
+    <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 1.5rem;">
+      Pretrained checkpoints are in the repository, so the demo notebooks run on CPU in a few
+      minutes with <strong>no dataset download</strong>.
+    </p>
+
+    <div class="code-block">
+<pre><code>git clone https://github.com/Centrum-IntelliPhysics/PDEControl_DPC.git
+cd PDEControl_DPC
+pip install -r requirements.txt
+
+cd HE_TT &amp;&amp; jupyter notebook 01_control_demo.ipynb</code></pre>
+    </div>
+
+    <div class="columns is-centered" style="margin-top:2rem;">
+      <div class="column is-half">
+        <div class="repro-card">
+          <h3 class="title is-6"><i class="fas fa-play"></i>&nbsp; <code>01_control_demo.ipynb</code></h3>
+          <p>Loads the pretrained policy, generates fresh test cases, and validates on the true
+             numerical solver. Change one <code>SEED</code> for a new set of test cases.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="repro-card">
+          <h3 class="title is-6"><i class="fas fa-graduation-cap"></i>&nbsp; <code>02_train_dpc.ipynb</code></h3>
+          <p>Trains a policy from scratch through the frozen TI-DeepONet. Short schedule by
+             default so it finishes quickly on CPU.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="has-text-centered" style="margin-top:1.5rem;">
+      The ~2.4&nbsp;GB training datasets &mdash; needed only to retrain a surrogate from scratch &mdash;
+      are on
+      <a href="https://huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC" target="_blank" rel="noopener">Hugging Face</a>,
+      fetched with <code>python download_data.py</code>.
+    </p>
+  </div>
+</section>
+
+<!-- ============================== BIBTEX ============================== -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code id="bibtex-code">@misc{sarkar2025learningcontrolpdesdifferentiable,
+      title={Learning to Control PDEs with Differentiable Predictive Control and Time-Integrated Neural Operators},
+      author={Dibakar Roy Sarkar and J\'an Drgo\v{n}a and Somdatta Goswami},
+      year={2025},
+      eprint={2511.08992},
+      archivePrefix={arXiv},
+      primaryClass={cs.CE},
+      url={https://arxiv.org/abs/2511.08992},
+}</code></pre>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p class="is-size-7">
+            Website built from the
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>,
+            which is licensed under
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+          </p>
+          <p class="is-size-7">
+            Code and trained models released under the MIT License.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+</body>
+</html>

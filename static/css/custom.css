@@ -1,0 +1,221 @@
+/* ==========================================================================
+   Project-page styling layered on top of the Academic Project Page Template.
+   Everything here is additive; the template's own CSS is untouched.
+   ========================================================================== */
+
+:root {
+  --accent:       #0b3d6b;   /* JHU-ish deep blue */
+  --accent-light: #1a6ba8;
+  --accent-soft:  #e8f1f8;
+  --ink:          #1f2933;
+  --muted:        #6b7280;
+}
+
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+.publication-title {
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.publication-authors a {
+  color: var(--accent-light);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s ease;
+}
+.publication-authors a:hover { border-bottom-color: var(--accent-light); }
+
+.publication-links { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+
+.publication-links .button.is-dark {
+  background: var(--accent);
+  border: none;
+  font-weight: 600;
+  transition: transform .12s ease, background .15s ease;
+}
+.publication-links .button.is-dark:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------------- method */
+.stage-card {
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 1.6rem 1.5rem 1.4rem;
+  height: 100%;
+  position: relative;
+}
+.stage-card .title { color: var(--accent); margin-bottom: .7rem; }
+.stage-num {
+  position: absolute;
+  top: -.9rem; left: 1.4rem;
+  width: 2rem; height: 2rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .95rem;
+}
+
+/* ---------------------------------------------------------------- tables */
+.systems-table th {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  vertical-align: middle;
+}
+.systems-table td { vertical-align: middle; }
+.systems-table tbody tr:hover { background: var(--accent-soft); }
+
+/* ---------------------------------------------------------------- carousel */
+.results-carousel .item { padding: 0 .6rem; }
+
+.results-carousel img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e5e9ef;
+  background: #fff;
+}
+
+.gif-label {
+  text-align: center;
+  font-weight: 600;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .5rem;
+}
+.gif-label-active { color: var(--accent); }
+
+/* keep carousel navigation visible against light figures */
+.slider-navigation-previous,
+.slider-navigation-next {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+.slider-navigation-previous i,
+.slider-navigation-next i { color: #fff !important; }
+
+/* ---------------------------------------------------------------- stats */
+.stat-card {
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-radius: 12px;
+  padding: 1.8rem 1rem;
+  text-align: center;
+  height: 100%;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(11, 61, 107, .10);
+}
+.stat-number {
+  font-size: 2.9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -.03em;
+}
+.stat-number sup { font-size: .55em; top: -.5em; }
+.stat-unit { font-size: .42em; font-weight: 600; margin-left: .12em; color: var(--accent-light); }
+.stat-label {
+  margin-top: .7rem;
+  font-size: .9rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------- results */
+.result-block { margin-bottom: 2.6rem; }
+.result-block .title { color: var(--accent); margin-bottom: .8rem; }
+.result-block img,
+.columns img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e5e9ef;
+  background: #fff;
+}
+.caption {
+  margin-top: .6rem;
+  font-size: .87rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------- code */
+.code-block pre,
+#BibTeX pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  overflow-x: auto;
+  font-size: .87rem;
+  line-height: 1.6;
+}
+.code-block code,
+#BibTeX code { background: transparent; color: inherit; padding: 0; }
+
+.repro-card {
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 1.3rem 1.4rem;
+  height: 100%;
+}
+.repro-card .title { color: var(--accent); margin-bottom: .55rem; }
+.repro-card code { background: rgba(11,61,107,.09); color: var(--accent); }
+
+/* ---------------------------------------------------------------- misc */
+.teaser img { box-shadow: 0 6px 26px rgba(15, 23, 42, .09); }
+
+.scroll-to-top {
+  position: fixed;
+  right: 1.4rem; bottom: 1.4rem;
+  width: 2.9rem; height: 2.9rem;
+  border: none; border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease, transform .15s ease;
+  z-index: 40;
+}
+.scroll-to-top.visible { opacity: .92; pointer-events: auto; }
+.scroll-to-top:hover { transform: translateY(-2px); opacity: 1; }
+
+.footer { background: #f7f9fb; padding: 2.4rem 1.5rem; }
+.footer a { color: var(--accent-light); }
+
+/* ---------------------------------------------------------------- mobile */
+@media screen and (max-width: 768px) {
+  .publication-title { font-size: 1.65rem !important; }
+  .stat-number { font-size: 2.2rem; }
+  .results-carousel .columns { display: block; }
+  .systems-table { font-size: .82rem; }
+}
+
+/* ---------------------------------------------------------------- tag pills */
+.tag-pill {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  margin-right: .45rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  vertical-align: middle;
+}
+.tag-pill-alt { background: #fdf0e3; color: #a2560d; }
