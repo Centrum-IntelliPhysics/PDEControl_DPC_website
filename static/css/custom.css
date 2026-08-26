@@ -343,3 +343,38 @@ p code {
 /* ---- captions and small print stay legible ---- */
 .caption, .gif-label { color: #5b6673 !important; }
 .gif-label-active    { color: #0b3d6b !important; }
+
+/* ==========================================================================
+   CAROUSEL ARROWS
+   bulma-carousel injects <svg><polyline fill="currentColor" ...></svg>.
+   `currentColor` resolves against the CSS `color` property of the button div,
+   which was inheriting the body's dark ink, giving a dark chevron on a dark
+   button. Set `color` on the div itself, and force fill/stroke as a backstop.
+   ========================================================================== */
+.slider-navigation-previous,
+.slider-navigation-next {
+  background: #0b3d6b !important;
+  background-color: #0b3d6b !important;
+  border: 1px solid #0b3d6b !important;
+  color: #ffffff !important;              /* drives fill="currentColor" */
+  opacity: 1 !important;
+}
+.slider-navigation-previous:hover,
+.slider-navigation-next:hover {
+  background: #1a6ba8 !important;
+  background-color: #1a6ba8 !important;
+  border-color: #1a6ba8 !important;
+  color: #ffffff !important;
+}
+.slider-navigation-previous svg,
+.slider-navigation-next svg {
+  color: #ffffff !important;
+  width: 34% !important;                  /* a little larger, easier to see */
+}
+.slider-navigation-previous svg polyline,
+.slider-navigation-next svg polyline,
+.slider-navigation-previous svg *,
+.slider-navigation-next svg * {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
