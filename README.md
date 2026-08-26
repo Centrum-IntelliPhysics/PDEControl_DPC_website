@@ -1,4 +1,4 @@
-# Project page — Learning to Control PDEs with DPC and Time-Integrated Neural Operators
+# Project page: Learning to Control PDEs with DPC and Time-Integrated Neural Operators
 
 Source for the project website of
 **"Learning to Control PDEs with Differentiable Predictive Control and Time-Integrated Neural Operators"**.
@@ -12,11 +12,11 @@ Source for the project website of
 | 🤗 Data | [huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC](https://huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC) |
 
 **Dibakar Roy Sarkar**, **Ján Drgoňa**\*, **Somdatta Goswami**\*
-Johns Hopkins University, Whiting School of Engineering · \*Advised equally
+Johns Hopkins University, Whiting School of Engineering. \*Advised equally
 
 ## Local preview
 
-Static site — no build step.
+Static site, no build step.
 
 ```bash
 python -m http.server 8000
@@ -56,7 +56,7 @@ A commented-out template section near the end of `index.html` marks a good place
 ## Deployment
 
 GitHub Pages, **Settings → Pages → Deploy from a branch → `main` → `/ (root)`**.
-Pushing to `main` redeploys. Keep `.nojekyll` — without it Jekyll mangles asset paths.
+Pushing to `main` redeploys. Keep `.nojekyll`, since without it Jekyll mangles asset paths.
 
 ## Credits
 

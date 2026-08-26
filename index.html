@@ -174,7 +174,7 @@
       <h2 class="subtitle has-text-centered" style="margin-top:1rem;">
         A <strong>TI-DeepONet</strong> learns the PDE dynamics and stays differentiable, so the
         optimal-control loss can be backpropagated through an entire closed-loop rollout to fit a
-        neural policy &mdash; <strong>offline, self-supervised, and with no supervisory controller.</strong>
+        neural policy, <strong>offline, self-supervised, and with no supervisory controller.</strong>
       </h2>
     </div>
   </div>
@@ -191,14 +191,14 @@
             We present a data-driven control framework for partial differential equations (PDEs).
             Our approach integrates <strong>Time-Integrated Deep Operator Networks (TI-DeepONets)</strong>
             as differentiable PDE surrogate models within the <strong>Differentiable Predictive Control
-            (DPC)</strong> &mdash; a self-supervised learning framework for constrained neural control
+            (DPC)</strong>, a self-supervised learning framework for constrained neural control
             policies. The TI-DeepONet architecture learns temporal derivatives and couples them with
             numerical integrators, while the DPC algorithm uses automatic differentiation to compute
             policy gradients by backpropagating the expectations of the optimal control loss through
             the learned TI-DeepONet. This approach enables efficient offline optimization of neural
             policies without the need for online optimization or supervisory controllers. We
             empirically demonstrate the proposed method across diverse PDE systems, including the
-            heat, the nonlinear Burgers', and the reaction&ndash;diffusion equations. The learned
+            heat, the nonlinear Burgers', and the reaction-diffusion equations. The learned
             policies achieve target tracking, constraint satisfaction, and curvature minimization
             objectives, while generalizing across distributions of initial conditions and parameters.
             Moreover, we demonstrate <strong>four orders of magnitude acceleration at inference
@@ -224,9 +224,8 @@
           <p>
             A TI-DeepONet predicts the <em>temporal derivative</em> of the state rather than the next
             state directly, and is composed with an RK4 integrator. Keeping the integrator explicit
-            preserves temporal causality and limits error accumulation over long horizons &mdash;
-            which is what makes the surrogate trustworthy enough to differentiate through for
-            hundreds of steps.
+            preserves temporal causality and limits error accumulation over long horizons. That is what
+            makes the surrogate trustworthy enough to differentiate through for hundreds of steps.
           </p>
         </div>
       </div>
@@ -239,7 +238,7 @@
             The surrogate is <strong>frozen</strong>. The optimal-control loss is evaluated on a full
             closed-loop rollout and its gradient flows back through every integration step to the
             policy parameters. No labelled control data, no supervisory controller, and no
-            optimization at deployment &mdash; the policy is a single forward pass.
+            optimization at deployment. The policy is a single forward pass.
           </p>
         </div>
       </div>
@@ -280,7 +279,7 @@
             <td>$\pi(u_t)\to c\in\mathbb{R}^2$</td>
           </tr>
           <tr>
-            <td><strong>Reaction&ndash;diffusion</strong></td>
+            <td><strong>Reaction-diffusion</strong></td>
             <td>$\partial_t u = D\,\partial_{xx}u + r\,u(1-u) + f$</td>
             <td>Target tracking</td>
             <td>$\pi(u_t,u^\ast)\to c\in\mathbb{R}^4$</td>
@@ -308,7 +307,7 @@
     <div class="carousel results-carousel">
 
       <div class="item">
-        <h3 class="title is-5 has-text-centered">Heat equation &mdash; target tracking</h3>
+        <h3 class="title is-5 has-text-centered">Heat equation: target tracking</h3>
         <div class="columns is-vcentered">
           <div class="column">
             <p class="gif-label">No control</p>
@@ -322,7 +321,7 @@
       </div>
 
       <div class="item">
-        <h3 class="title is-5 has-text-centered">Burgers' equation &mdash; shock mitigation</h3>
+        <h3 class="title is-5 has-text-centered">Burgers' equation: shock mitigation</h3>
         <div class="columns is-vcentered">
           <div class="column">
             <p class="gif-label">No control</p>
@@ -336,7 +335,7 @@
       </div>
 
       <div class="item">
-        <h3 class="title is-5 has-text-centered">Reaction&ndash;diffusion &mdash; target tracking</h3>
+        <h3 class="title is-5 has-text-centered">Reaction-diffusion: target tracking</h3>
         <div class="columns is-vcentered">
           <div class="column">
             <p class="gif-label">No control</p>
@@ -401,19 +400,19 @@
     <h2 class="title is-3 has-text-centered">Closed-loop results</h2>
     <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
       Policies are trained against the learned surrogate, then deployed on the <em>true numerical
-      solver</em> &mdash; the real test of whether the surrogate was faithful enough to learn through.
+      solver</em>. That is the real test of whether the surrogate was faithful enough to learn through.
     </p>
 
     <div class="result-block">
-      <h3 class="title is-5">Heat equation &mdash; target tracking</h3>
+      <h3 class="title is-5">Heat equation: target tracking</h3>
       <img src="static/images/results/heat_closed_loop.png" alt="Heat equation closed-loop tracking through the learned surrogate" loading="lazy">
       <p class="caption"><span class="tag-pill">learned dynamics</span> Policy-controlled vs. uncontrolled evolution with the applied control signals.</p>
       <img src="static/images/results/heat_physics.png" alt="Heat equation policy deployed on the Crank-Nicolson solver" loading="lazy" style="margin-top:1rem;">
-      <p class="caption"><span class="tag-pill tag-pill-alt">true solver</span> The same policy driving the Crank&ndash;Nicolson solver.</p>
+      <p class="caption"><span class="tag-pill tag-pill-alt">true solver</span> The same policy driving the Crank-Nicolson solver.</p>
     </div>
 
     <div class="result-block">
-      <h3 class="title is-5">Burgers' equation &mdash; shock mitigation</h3>
+      <h3 class="title is-5">Burgers' equation: shock mitigation</h3>
       <img src="static/images/results/burgers_closed_loop.png" alt="Burgers equation shock mitigation through the learned surrogate" loading="lazy">
       <p class="caption"><span class="tag-pill">learned dynamics</span> Curvature suppressed relative to the uncontrolled shock-forming trajectory.</p>
       <img src="static/images/results/burgers_physics.png" alt="Burgers policy deployed on the upwind solver" loading="lazy" style="margin-top:1rem;">
@@ -421,7 +420,7 @@
     </div>
 
     <div class="result-block">
-      <h3 class="title is-5">Reaction&ndash;diffusion &mdash; target tracking</h3>
+      <h3 class="title is-5">Reaction-diffusion: target tracking</h3>
       <img src="static/images/results/reaction_diffusion_closed_loop.png" alt="Reaction-diffusion closed-loop tracking through the learned surrogate" loading="lazy">
       <p class="caption"><span class="tag-pill">learned dynamics</span> The policy counteracts the nonlinear reaction term driving the state toward $u\equiv 1$.</p>
       <img src="static/images/results/reaction_diffusion_physics.png" alt="Reaction-diffusion policy deployed on the backward-Euler Newton solver" loading="lazy" style="margin-top:1rem;">
@@ -436,7 +435,7 @@
     <h2 class="title is-3 has-text-centered">Training</h2>
     <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 2rem;">
       Stage&nbsp;1 fits the surrogate to trajectory data. Stage&nbsp;2 freezes it and fits the policy
-      through differentiable rollouts &mdash; note that the policy objective needs
+      through differentiable rollouts. Note that the policy objective needs
       <em>no labelled controls at all</em>.
     </p>
 
@@ -452,7 +451,7 @@
       </div>
       <div class="column">
         <img src="static/images/results/reaction_diffusion_ti_don_loss.png" alt="Reaction-diffusion surrogate training loss" loading="lazy">
-        <p class="caption">Reaction&ndash;diffusion</p>
+        <p class="caption">Reaction-diffusion</p>
       </div>
     </div>
 
@@ -460,15 +459,15 @@
     <div class="columns">
       <div class="column">
         <img src="static/images/results/heat_dpc_loss.png" alt="Heat DPC policy training loss" loading="lazy">
-        <p class="caption">Heat &mdash; terminal tracking MSE</p>
+        <p class="caption">Heat: terminal tracking MSE</p>
       </div>
       <div class="column">
         <img src="static/images/results/burgers_dpc_loss.png" alt="Burgers DPC policy training loss" loading="lazy">
-        <p class="caption">Burgers' &mdash; accumulated curvature</p>
+        <p class="caption">Burgers': accumulated curvature</p>
       </div>
       <div class="column">
         <img src="static/images/results/reaction_diffusion_dpc_loss.png" alt="Reaction-diffusion DPC policy training loss" loading="lazy">
-        <p class="caption">Reaction&ndash;diffusion &mdash; terminal tracking MSE</p>
+        <p class="caption">Reaction-diffusion: terminal tracking MSE</p>
       </div>
     </div>
   </div>
@@ -492,7 +491,7 @@
       </div>
       <div class="column">
         <img src="static/images/results/reaction_diffusion_error_dist.png" alt="Reaction-diffusion surrogate error distribution" loading="lazy">
-        <p class="caption">Reaction&ndash;diffusion</p>
+        <p class="caption">Reaction-diffusion</p>
       </div>
     </div>
   </div>
@@ -551,7 +550,7 @@ cd HE_TT &amp;&amp; jupyter notebook 01_control_demo.ipynb</code></pre>
     </div>
 
     <p class="has-text-centered" style="margin-top:1.5rem;">
-      The ~2.4&nbsp;GB training datasets &mdash; needed only to retrain a surrogate from scratch &mdash;
+      The ~2.4&nbsp;GB training datasets, needed only to retrain a surrogate from scratch,
       are on
       <a href="https://huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC" target="_blank" rel="noopener">Hugging Face</a>,
       fetched with <code>python download_data.py</code>.
