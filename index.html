@@ -362,35 +362,19 @@
       reports <strong>four orders of magnitude</strong> of acceleration.
     </p>
 
-    <div class="columns is-centered">
-      <div class="column is-one-third">
-        <div class="stat-card">
-          <div class="stat-number">10<sup>4</sup>&times;</div>
-          <div class="stat-label">faster than nonlinear MPC<br>at inference</div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="stat-card">
-          <div class="stat-number">0.34<span class="stat-unit">ms</span></div>
-          <div class="stat-label">policy inference<br>per control step</div>
-        </div>
-      </div>
-      <div class="column is-one-third">
-        <div class="stat-card">
-          <div class="stat-number">400</div>
-          <div class="stat-label">step closed-loop rollout<br>in under 2 seconds</div>
-        </div>
-      </div>
+    <div class="table-figure">
+      <img src="static/images/extra/nmpc_vs_dpc_table.png"
+           alt="Table comparing nonlinear MPC and TI-DeepONet DPC on tracking error and time per control step across the heat, Burgers and reaction-diffusion systems"
+           loading="lazy">
     </div>
 
-    <p class="has-text-centered is-size-7" style="opacity:.7;margin-top:1rem;">
-      Per-step and rollout timings measured with <code>evaluate.py</code> from the released code,
-      single CPU core. The 10<sup>4</sup>&times; figure is the paper's comparison against nonlinear
-      MPC benchmarks.
+    <p class="caption" style="max-width:46rem;margin:1rem auto 0;">
+      Nonlinear MPC needs <strong>seconds</strong> per control step because it solves an
+      optimization problem online. The learned policy needs <strong>tenths of a
+      millisecond</strong>, while reaching comparable tracking error. Across the three systems
+      that is a speedup of roughly 1.7&times;10<sup>4</sup>, 4.4&times;10<sup>4</sup> and
+      3.3&times;10<sup>4</sup>.
     </p>
-
-    <!-- TODO(you): drop in the paper's MPC-vs-DPC timing table or bar chart here.
-         Put the figure at static/images/extra/ and reference it below. -->
   </div>
 </section>
 

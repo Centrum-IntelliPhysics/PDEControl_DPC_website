@@ -63,11 +63,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
 }
 
 /* ---------------------------------------------------------------- tables */
-.systems-table th {
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
+/* Bulma ships `.table thead th { color:#363636 }` at specificity (0,1,2), which
+   beats a plain `.systems-table th`. Match that specificity and force the colour,
+   otherwise the header renders dark grey on the dark blue fill and disappears. */
+.systems-table thead th,
+.systems-table thead td {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  font-weight: 700;
   vertical-align: middle;
+  border-color: var(--accent) !important;
 }
 .systems-table td { vertical-align: middle; }
 .systems-table tbody tr:hover { background: var(--accent-soft); }
@@ -99,9 +104,49 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
 .slider-navigation-next {
   background: var(--accent) !important;
   border-color: var(--accent) !important;
+  opacity: 1 !important;
 }
+.slider-navigation-previous:hover,
+.slider-navigation-next:hover { background: var(--accent-light) !important; }
 .slider-navigation-previous i,
-.slider-navigation-next i { color: #fff !important; }
+.slider-navigation-next i {
+  color: #ffffff !important;
+  border-color: #ffffff !important;   /* bulma-carousel draws the chevron with borders */
+}
+
+/* bulma-carousel gives pagination dots `background:#fff`, which is invisible on a
+   white page. Give the inactive dots a visible fill and the active one the accent. */
+.slider-pagination .slider-page {
+  background: #c6d2dd !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  width: 11px !important;
+  height: 11px !important;
+  border: 1px solid #a9bbcc !important;
+}
+.slider-pagination .slider-page.is-active,
+.slider-pagination .slider-page:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  transform: scale(1.15);
+}
+
+/* ---------------------------------------------------------------- table figure */
+.table-figure {
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-radius: 10px;
+  padding: 1.2rem;
+  overflow-x: auto;
+}
+.table-figure img {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: none;
+}
 
 /* ---------------------------------------------------------------- stats */
 .stat-card {
