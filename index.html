@@ -150,6 +150,13 @@
                 </a>
               </span>
               <span class="link-block">
+                <a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/HE_TT/01_control_demo.ipynb" target="_blank" rel="noopener"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-rocket"></i></span>
+                  <span>Colab</span>
+                </a>
+              </span>
+              <span class="link-block">
                 <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fas fa-quote-left"></i></span>
                   <span>Cite</span>
@@ -505,15 +512,44 @@
     <h2 class="title is-3 has-text-centered">Try it yourself</h2>
     <p class="has-text-centered content" style="max-width:44rem;margin:0 auto 1.5rem;">
       Pretrained checkpoints are in the repository, so the demo notebooks run on CPU in a few
-      minutes with <strong>no dataset download</strong>.
+      minutes with <strong>no dataset download</strong>. Open one in Google Colab and there is
+      <strong>nothing to install</strong> &mdash; the first cell clones the repository into the
+      Colab runtime for you.
     </p>
 
-    <div class="code-block">
-<pre><code>git clone https://github.com/Centrum-IntelliPhysics/PDEControl_DPC.git
-cd PDEControl_DPC
-pip install -r requirements.txt
-
-cd HE_TT &amp;&amp; jupyter notebook 01_control_demo.ipynb</code></pre>
+    <div class="colab-table">
+      <table>
+        <thead>
+          <tr>
+            <th>System</th>
+            <th>Run a pretrained policy</th>
+            <th>Train the policy yourself</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Heat equation</th>
+            <td><a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/HE_TT/01_control_demo.ipynb" target="_blank" rel="noopener">
+              <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open the heat equation control demo in Colab"></a></td>
+            <td><a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/HE_TT/02_train_dpc.ipynb" target="_blank" rel="noopener">
+              <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open the heat equation training notebook in Colab"></a></td>
+          </tr>
+          <tr>
+            <th scope="row">Burgers' equation</th>
+            <td><a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/BE_shock/01_control_demo.ipynb" target="_blank" rel="noopener">
+              <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open the Burgers' equation control demo in Colab"></a></td>
+            <td><a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/BE_shock/02_train_dpc.ipynb" target="_blank" rel="noopener">
+              <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open the Burgers' equation training notebook in Colab"></a></td>
+          </tr>
+          <tr>
+            <th scope="row">Reaction&ndash;diffusion</th>
+            <td><a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/RD_TT/01_control_demo.ipynb" target="_blank" rel="noopener">
+              <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open the reaction-diffusion control demo in Colab"></a></td>
+            <td><a href="https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/RD_TT/02_train_dpc.ipynb" target="_blank" rel="noopener">
+              <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open the reaction-diffusion training notebook in Colab"></a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="columns is-centered" style="margin-top:2rem;">
@@ -531,6 +567,16 @@ cd HE_TT &amp;&amp; jupyter notebook 01_control_demo.ipynb</code></pre>
              default so it finishes quickly on CPU.</p>
         </div>
       </div>
+    </div>
+
+    <h3 class="title is-5 has-text-centered" style="margin-top:2.5rem;">Or run it locally</h3>
+
+    <div class="code-block">
+<pre><code>git clone https://github.com/Centrum-IntelliPhysics/PDEControl_DPC.git
+cd PDEControl_DPC
+pip install -r requirements.txt
+
+cd HE_TT &amp;&amp; jupyter notebook 01_control_demo.ipynb</code></pre>
     </div>
 
     <p class="has-text-centered" style="margin-top:1.5rem;">

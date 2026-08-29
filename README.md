@@ -10,6 +10,7 @@ Source for the project website of
 | 📄 Paper | [arXiv:2511.08992](https://arxiv.org/abs/2511.08992) |
 | 💻 Code | [Centrum-IntelliPhysics/PDEControl_DPC](https://github.com/Centrum-IntelliPhysics/PDEControl_DPC) |
 | 🤗 Data | [huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC](https://huggingface.co/datasets/Centrum-IntelliPhysics/PDEControl_DPC) |
+| ▶️ Colab | [heat equation demo notebook](https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/HE_TT/01_control_demo.ipynb) |
 
 **Dibakar Roy Sarkar**, **Ján Drgoňa**\*, **Somdatta Goswami**\*
 Johns Hopkins University, Whiting School of Engineering. \*Advised equally
@@ -37,6 +38,20 @@ static/
 │   └── extra/              # additional paper figures
 └── pdfs/schematic.pdf      # vector method figure
 ```
+
+## Colab links
+
+The "Try it yourself" section and the hero **Colab** button link straight into the notebooks in
+the [code repository](https://github.com/Centrum-IntelliPhysics/PDEControl_DPC), one badge per
+notebook:
+
+```
+https://colab.research.google.com/github/Centrum-IntelliPhysics/PDEControl_DPC/blob/main/<EXPERIMENT>/<NOTEBOOK>.ipynb
+```
+
+where `<EXPERIMENT>` is `HE_TT`, `BE_shock` or `RD_TT`. They resolve against `main`, so renaming
+or moving a notebook in the code repo breaks them — update both places together. The badge
+grid is styled by `.colab-table` in `static/css/custom.css`.
 
 ## Adding a figure
 

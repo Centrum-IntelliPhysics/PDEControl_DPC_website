@@ -220,6 +220,37 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
 .repro-card .title { color: var(--accent); margin-bottom: .55rem; }
 .repro-card code { background: rgba(11,61,107,.09); color: var(--accent); }
 
+/* ------------------------------------------------------------ colab grid */
+.colab-table { overflow-x: auto; }
+.colab-table table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.colab-table th,
+.colab-table td {
+  padding: .7rem 1.1rem;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.colab-table thead th {
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(11,61,107,.14);
+}
+.colab-table tbody th { text-align: left; color: var(--accent); font-weight: 600; }
+.colab-table tbody tr + tr th,
+.colab-table tbody tr + tr td { border-top: 1px solid rgba(11,61,107,.09); }
+.colab-table img { height: 20px; width: auto; display: inline-block; vertical-align: middle; }
+.colab-table a { transition: opacity .15s ease; }
+.colab-table a:hover { opacity: .75; }
+
 /* ---------------------------------------------------------------- misc */
 .teaser img { box-shadow: 0 6px 26px rgba(15, 23, 42, .09); }
 
